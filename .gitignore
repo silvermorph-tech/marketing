@@ -1,0 +1,9 @@
+.DS_Store
+.env
+# local working data (created from starter/ on first use)
+silvermorph-linkedin/drafts/*
+silvermorph-linkedin/inbox/*
+silvermorph-linkedin/published/*
+silvermorph-linkedin/calendar/
+silvermorph-linkedin/inputs/
+!**/.gitkeep

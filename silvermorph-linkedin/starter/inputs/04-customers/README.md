@@ -1,0 +1,1 @@
+Three named customer quotes and one case study are on silvermorph-tech.com (see facts-bank, QUOTE). None may be reused on LinkedIn until the person or organisation agrees. Record each OK in a per-customer file from `_TEMPLATE.md`.
