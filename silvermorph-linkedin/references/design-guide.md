@@ -3,7 +3,7 @@
 Renderer: `python3 scripts/render_poster.py --list` shows the layouts (live reference: `design-reference.html`, rebuilt by `scripts/build_reference.py`) and their slots. Output: 1200 x 1200 PNG (1:1, locked as default by the owner; a 4:5 variant is optional later). Filename: `silvermorph-<category>-<slug>.png`.
 
 ## Brand tokens (v3, owner-set 2026-10-14 from the SenseAI x Silvermorph partnership image)
-Cool, clean, tech-forward. Values sampled from the reference image.
+Cool, clean, tech-forward, editorial. Sharp corners everywhere (no border-radius, no pills, no soft shadows); labels are mono caps with a short teal rule; panels are flush with their photos. Values sampled from the reference image.
 
 | Token | Hex | Use |
 |---|---|---|

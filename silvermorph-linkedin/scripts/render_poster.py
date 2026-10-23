@@ -89,14 +89,14 @@ def _crop(s, key, left, top, w, h, radius, pos):
 
 
 def l1c(s):
-    """Event recap with 3 photos: wide main photo, two smaller below, navy panel under the collage."""
-    return (_crop(s, "photo", 64, 64, 1072, 470, "28px 28px 6px 6px", s.get("photo_pos", "50% 62%"))
-            + _crop(s, "photo_a", 64, 542, 532, 280, "6px 6px 6px 28px", s.get("photo_a_pos", "50% 50%"))
-            + _crop(s, "photo_b", 604, 542, 532, 280, "6px 6px 28px 6px", s.get("photo_b_pos", "50% 40%"))
-            + '<div style="position:absolute;left:64px;right:64px;top:830px;height:306px;background:#0C305A;border-radius:6px 6px 28px 28px;padding:34px 46px;color:#fff">'
-            f'<span class="chip" style="font-size:24px;padding:8px 24px">{e(s["date"])}</span>'
-            f'<div style="margin-top:20px;font-size:60px;line-height:1.05;font-weight:800;letter-spacing:-1.5px">{br(s["headline"])}</div>'
-            f'<div style="margin-top:16px;font-size:30px;color:#50DFDD">{e(s["sub"])}</div></div>')
+    """Event recap with 3 photos: wide main photo and two details, flush with the navy text block below (sharp, editorial)."""
+    return (_crop(s, "photo", 64, 64, 1072, 470, "0", s.get("photo_pos", "50% 62%"))
+            + _crop(s, "photo_a", 64, 542, 532, 280, "0", s.get("photo_a_pos", "50% 50%"))
+            + _crop(s, "photo_b", 604, 542, 532, 280, "0", s.get("photo_b_pos", "50% 40%"))
+            + '<div style="position:absolute;left:64px;right:64px;top:830px;height:306px;background:#0C305A;padding:38px 48px;color:#fff;border-top:8px solid #0096A8">'
+            f'<span class="chip" style="font-size:22px;margin-top:2px">{e(s["date"])}</span>'
+            f'<div style="margin-top:22px;font-size:60px;line-height:1.04;font-weight:800;letter-spacing:-1.5px;text-wrap:balance">{br(s["headline"])}</div>'
+            f'<div style="margin-top:14px;font-size:28px;color:#50DFDD">{e(s["sub"])}</div></div>')
 
 
 def l1b(s):
@@ -132,7 +132,7 @@ def l3a(s):
 def l3b(s):
     nodes = [n.strip() for n in s["nodes"].split("|")]
     xs = [70 + i * (720 / max(len(nodes) - 1, 1)) for i in range(len(nodes))]
-    nd = "".join(f'<circle cx="{x:.0f}" cy="150" r="16" fill="#fff" stroke="#0C305A" stroke-width="5"/>'
+    nd = "".join(f'<rect x="{x-14:.0f}" y="136" width="28" height="28" fill="#fff" stroke="#0C305A" stroke-width="5"/>'
                  f'<text x="{x:.0f}" y="238" text-anchor="middle" font-size="26" font-weight="600" fill="#0C305A">{e(n)}</text>' for x, n in zip(xs, nodes))
     d = f"M{xs[0]:.0f} 150 " + " ".join(f"C{x0 + 70:.0f} {10 if i % 2 == 0 else 290} {x1 - 70:.0f} {290 if i % 2 == 0 else 10} {x1:.0f} 150"
                                        for i, (x0, x1) in enumerate(zip(xs, xs[1:])))
@@ -140,9 +140,9 @@ def l3b(s):
             f'<path d="{d}" fill="none" stroke="#0096A8" stroke-width="5" stroke-linecap="round" opacity=".55"/>'
             f'<path d="M{xs[0]:.0f} 150 C250 300 600 -40 {xs[-1]:.0f} 150" fill="none" stroke="#0C305A" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round"/>{nd}</svg></div>'
             '<div class="pan p2"><small>WITH EZZY</small><svg viewBox="0 0 860 200"><line x1="70" y1="100" x2="640" y2="100" stroke="#50DFDD" stroke-width="8" stroke-linecap="round"/>'
-            '<polygon points="640,76 690,100 640,124" fill="#50DFDD"/><rect x="70" y="52" width="260" height="96" rx="48" fill="#fff"/>'
+            '<polygon points="640,76 690,100 640,124" fill="#50DFDD"/><rect x="70" y="52" width="260" height="96" rx="0" fill="#fff"/>'
             f'<text x="200" y="112" text-anchor="middle" font-size="34" font-weight="800" fill="#0C305A">{e(s["action"])}</text>'
-            f'<rect x="700" y="52" width="150" height="96" rx="48" fill="#0096A8"/><text x="775" y="112" text-anchor="middle" font-size="34" font-weight="800" fill="#fff">{e(s["done"])}</text></svg></div>')
+            f'<rect x="700" y="52" width="150" height="96" rx="0" fill="#0096A8"/><text x="775" y="112" text-anchor="middle" font-size="34" font-weight="800" fill="#fff">{e(s["done"])}</text></svg></div>')
 
 
 def l4a(s):
@@ -182,11 +182,11 @@ def l5b(s):
         a = math.radians(-90 + 360 / len(sat) * i)
         x, y = cx + r * math.cos(a), cy + r * math.sin(a)
         lines += f'<line x1="{cx}" y1="{cy}" x2="{x:.0f}" y2="{y:.0f}" stroke="#0096A8" stroke-width="3" opacity=".5"/>'
-        pills += (f'<rect x="{x - 110:.0f}" y="{y - 44:.0f}" width="220" height="88" rx="44" fill="#fff" stroke="#DCE8EC" stroke-width="2"/>'
+        pills += (f'<rect x="{x - 110:.0f}" y="{y - 44:.0f}" width="220" height="88" rx="0" fill="#fff" stroke="#DCE8EC" stroke-width="2"/>'
                   f'<text x="{x:.0f}" y="{y - 4:.0f}" text-anchor="middle" font-size="27" font-weight="800" fill="#0C305A">{e(n.strip())}</text>'
                   f'<text x="{x:.0f}" y="{y + 26:.0f}" text-anchor="middle" font-size="21" fill="#0096A8" font-weight="600">{e(role.strip())}</text>')
     svg = (f'<svg class="orbit" viewBox="0 0 1200 780"><circle cx="{cx}" cy="{cy}" r="{r}" fill="none" stroke="#0096A8" stroke-width="2" stroke-dasharray="3 12" opacity=".7"/>'
-           f'{lines}<circle cx="{cx}" cy="{cy}" r="120" fill="#0C305A"/><text x="{cx}" y="{cy + 6}" text-anchor="middle" font-size="68" font-weight="800" fill="#fff">{e(s.get("center", "Ezzy"))}</text>'
+           f'{lines}<rect x="{cx-120}" y="{cy-120}" width="240" height="240" fill="#0C305A"/><text x="{cx}" y="{cy + 6}" text-anchor="middle" font-size="68" font-weight="800" fill="#fff">{e(s.get("center", "Ezzy"))}</text>'
            f'<text x="{cx}" y="{cy + 44}" text-anchor="middle" font-size="22" fill="#50DFDD" font-weight="600">{e(s.get("center_sub", "schedule · matching"))}</text>{pills}</svg>')
     return corners(top_left=False) + svg + f'<div class="h5b">{br(s["headline"])}</div>'
 

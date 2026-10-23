@@ -82,11 +82,11 @@ h1{{font-size:clamp(34px,6vw,64px);line-height:1.05;margin:12px 0;letter-spacing
 header p{{max-width:640px;opacity:.85}}main{{max-width:1180px;margin:0 auto;padding:0 6vw 80px}}
 h2{{font-size:30px;color:var(--navy);margin:56px 0 8px;padding-bottom:10px;border-bottom:2px solid var(--navy)}}
 .lead{{margin:12px 0 20px;max-width:760px}}.sws{{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}}
-.sw{{border:1px solid var(--line);border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:2px;font-size:13px}}.sw code{{font-size:12px}}
+.sw{{border:1px solid var(--line);padding:12px;display:flex;flex-direction:column;gap:2px;font-size:13px}}.sw code{{font-size:12px}}
 .cols{{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;margin-top:20px}}
 .cols h3{{font:700 12px ui-monospace,Menlo,monospace;letter-spacing:2px;color:var(--teal);margin-bottom:6px}}
 .pool{{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:28px;margin-top:20px}}
-figure .card{{border-radius:12px;box-shadow:0 6px 24px rgba(6,36,78,.15);overflow:hidden}}
+figure .card{{box-shadow:0 6px 24px rgba(6,36,78,.15);overflow:hidden}}
 .pw{{position:relative;width:100%;aspect-ratio:1/1;overflow:hidden}}.pw iframe{{position:absolute;left:0;top:0;width:1200px;height:1200px;border:0;transform-origin:0 0}}
 figcaption{{margin-top:10px;font-size:14px;display:flex;flex-direction:column;gap:3px}}figcaption span{{color:#5b6670}}
 figcaption code{{font:12px ui-monospace,Menlo,monospace;color:var(--teal)}}figcaption .cmd{{color:#5b6670;word-break:break-all}}
