@@ -24,7 +24,7 @@ Run it on the finished draft and poster. Fix and re-check, up to 2 rounds. A har
 2. One idea only; nothing decorative that carries no meaning.
 3. Brand tokens only; frame invariants intact.
 4. Layout differs from the previous post in this category (`published/publish-log.csv`).
-5. Photos look real and candid; product UI is English and legible.
+5. Every photo is a supplied real file (no AI-generated images); product UI is English and legible.
 
 ## Output of the check
 One line per failed test and what was changed. If everything passed, say so in one line. Never explain away a failure.

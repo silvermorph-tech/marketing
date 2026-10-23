@@ -11,11 +11,14 @@
 --bg PHOTO [--bg-strength 0.88] puts an environment photo under any layout (brand grade, scrim, light grain).
 Layouts are a pool per category; the skill rotates them (see references/design-guide.md).
 A missing required slot is an error. A missing photo is an error unless --allow-placeholder.
+--html FILE --out out.png [--size 1200x1200] screenshots a hand-written HTML poster (use when no layout fits; see references/html-composition.md).
+Chrome path: set CHROME_PATH if Chrome is not at the macOS default.
 --stamp "DRAFT · NEEDS SIGN-OFF" overlays a warning chip. A stamped poster must never be published.
 """
 import argparse
 import html
 import math
+import os
 import subprocess
 import sys
 import tempfile
@@ -24,7 +27,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 CSS = (ROOT / "assets" / "posters.css").read_text(encoding="utf-8")
 LOGO = (ROOT / "assets" / "logo.png").as_uri()
-CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+CHROME = os.environ.get("CHROME_PATH", "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome")
 e = html.escape
 
 
@@ -204,12 +207,24 @@ def main():
     ap.add_argument("--bg", help="environment photo placed under the layout (graded, with brand-colour scrim)")
     ap.add_argument("--bg-strength", type=float, default=0.88, help="scrim opacity at the text side, 0.6 to 0.95")
     ap.add_argument("--allow-placeholder", action="store_true")
+    ap.add_argument("--html", help="screenshot this HTML file instead of a built-in layout")
+    ap.add_argument("--size", default="1200x1200")
     ap.add_argument("--html-only", action="store_true")
     ap.add_argument("--out")
     a = ap.parse_args()
     if a.list:
         for k, (tag, dark, tint, req, _) in LAYOUTS.items():
             print(f"{k}  {tag:15} slots: {', '.join(req)}")
+        return 0
+    if a.html:
+        if not a.out:
+            ap.error("--out is required")
+        w, h = (int(x) for x in a.size.lower().split("x"))
+        out = Path(a.out).resolve()
+        subprocess.run([CHROME, "--headless", "--disable-gpu", "--allow-file-access-from-files", "--hide-scrollbars",
+                        "--virtual-time-budget=4000", f"--screenshot={out}", f"--window-size={w},{h}", Path(a.html).resolve().as_uri()],
+                       check=True, capture_output=True)
+        print(f"poster written: {out}  [custom html {w}x{h}]")
         return 0
     if not a.layout or not a.out:
         ap.error("--layout and --out are required")

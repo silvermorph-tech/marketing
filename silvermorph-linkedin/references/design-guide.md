@@ -45,13 +45,12 @@ Logo top-left · category tag top-right · wordmark strip at the bottom · one i
 | 5B | Partnership | orbit diagram around Ezzy, one corner stripe |
 New layouts may be added if they keep the tokens and invariants. Record the last layout used per category in `published/publish-log.csv`.
 
-## Image policy (owner decision)
-- AI-generated images are allowed when they match the look: warm natural light, muted palette, negative space, no neon, no glossy 3D, no busy collage.
-- People images: photographic, cinema-lens look (shallow depth of field, natural skin, real Hong Kong care settings, candid). Must read as a real person in a real scene.
-- No readable text, logos or UI inside generated images.
-- Real photos or real captures are mandatory for: named people, named customers, product UI. AI never stands in for a specific real person or deployment.
+## Image policy (owner decision, 2026-10-23)
+- **Never generate images with AI.** No image-generation tools, no AI people, no AI scenes or backgrounds. Generated images distort faces, hands, logos and UI, so every poster is built from the owner's real materials.
+- Posters are made in **HTML and screenshotted** with `scripts/render_poster.py` (built-in layouts, or `--html` for a custom page; see `html-composition.md`). Photos, logos and screenshots are placed into the HTML as supplied: crop, scale, grade with CSS, never redraw.
+- Allowed sources: files the user sent (`materials/`), the website assets in `inputs/05-media/`, brand logos, real product captures, and shapes, type, diagrams and icons drawn in HTML/SVG/CSS.
+- If a slot needs a photo and none was supplied, ask for it. Never fill it with a generated or stock-looking stand-in. Insight posters are typography or diagram only.
 - Product UI is cropped to one key screen, English, legible at phone width.
-- Insight posters are typography or diagram only.
 - The Ezzy logo asset on the site contains Chinese characters (易仔). Posters are English-only: use an English-only Ezzy logo, or none.
 
 ## Stamps
