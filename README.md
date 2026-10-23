@@ -9,9 +9,9 @@ Shared Claude skills for the Silvermorph team.
 ## Install (Claude Code)
 
 ```bash
-git clone git@github.com:<org>/silvermorph-skills.git
+git clone https://github.com/silvermorph-tech/marketing.git
 mkdir -p ~/.claude/skills
-cp -R silvermorph-skills/silvermorph-linkedin ~/.claude/skills/
+cp -R marketing/silvermorph-linkedin ~/.claude/skills/
 ```
 
 Update: `git pull`, then copy again (your local `drafts/`, `inputs/`, `calendar/` are not in the repo; copy with `rsync -a --exclude drafts --exclude inputs --exclude calendar --exclude published --exclude inbox` to keep them).
