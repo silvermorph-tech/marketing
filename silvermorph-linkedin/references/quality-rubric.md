@@ -22,7 +22,7 @@ Run it on the finished draft and poster. Fix and re-check, up to 2 rounds. A har
 ## Design tests (need 4 of 5)
 1. Headline readable on a 360 px wide render.
 2. One idea only; nothing decorative that carries no meaning.
-3. Brand tokens only; frame rules kept (no logo, tag or wordmark strip on the image; 64 px margins).
+3. Brand tokens only; frame rules kept (corner marks top-right and bottom-left, no header logo or footer strip; 64 px margins).
 4. Layout differs from the previous post in this category (`published/publish-log.csv`).
 5. Every photo is a supplied real file (no AI-generated images); product UI is English and legible.
 

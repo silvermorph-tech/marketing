@@ -229,7 +229,7 @@ def build_html(layout, slots, stamp="", bg=None, bg_strength=0.88):
     body = (backdrop(bg, dark, tint, bg_strength) if bg else "") + fn(slots) + (f'<div class="demo">{e(stamp)}</div>' if stamp else "")
     return (f'<!DOCTYPE html><html><head><meta charset="utf-8"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">'
             f"<style>{CSS}body,.poster{{width:{W}px;height:{H}px}}</style></head><body><div class=\"poster\"><div class=\"pin {cls}\">{body}"
-            '</div></div></body></html>')
+            f'<div class="cm tr">{tag}</div><div class="cm bl">silvermorph tech</div></div></div></body></html>')
 
 
 def main():

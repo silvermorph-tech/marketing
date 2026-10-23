@@ -27,7 +27,7 @@ White field, pale curves, a teal-gradient corner with a deep-navy stripe and a t
 Ezzy turns one voice message into one schedule across many handoffs, so the visual language is a line: waveform (voice), tangled thread (handoffs), straight line (Ezzy). Bold through scale and asymmetry (oversized type and numerals, arch crop, tilted cards, inverted backgrounds), never through new colours.
 
 ## Frame invariants (never break)
-No header logo, no category tag, no wordmark strip: LinkedIn already shows the company avatar and name above every post, so repeating them on the image is noise. Brand comes from the tokens, Inter and the layout language. The logo appears only where it carries meaning (the 5A partnership lockup). One idea per poster · generous 64 px margins · headline readable at 360 px wide · English only · brand tokens only.
+Two small corner marks only: category tag top-right, `SILVERMORPH TECH` wordmark bottom-left (mono caps, 15 px, inside the 64 px margin band). No top-left logo and no footer rule: LinkedIn already shows the company avatar and name above every post. The logo appears only where it carries meaning (the 5A partnership lockup). One idea per poster · generous 64 px margins · headline readable at 360 px wide · English only · brand tokens only.
 
 ## Layout pool (rotate within a category, never the same layout twice in a row)
 | ID | Category | Look |

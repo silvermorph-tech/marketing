@@ -50,4 +50,5 @@
 
 .lt h4,.h2a,.h2b,.h3a,.h3b,.qt,.h5a,.h5b,.lk-h{text-wrap:balance}
 .pin{-webkit-font-smoothing:antialiased}
+.cm{position:absolute;z-index:6;font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:calc(var(--u)*15);font-weight:700;letter-spacing:calc(var(--u)*4);text-transform:uppercase;color:var(--ba);line-height:1}.cm.tr{right:calc(var(--u)*64);top:calc(var(--u)*26)}.cm.bl{left:calc(var(--u)*64);bottom:calc(var(--u)*24)}.pin.dark .cm{color:var(--bl)}
 .lt{border-top:calc(var(--u)*8) solid var(--ba)}

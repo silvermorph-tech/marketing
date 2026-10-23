@@ -95,7 +95,7 @@ figcaption code{{font:12px ui-monospace,Menlo,monospace;color:var(--teal)}}figca
 <p>These are the live layouts, rendered by the same code that makes the real posters, then screenshotted to PNG. Sample content is fictional.</p></header>
 <main>
 <h2>Design standard</h2><p class="lead">Cool, clean, tech-forward. Square 1200 × 1200. Inter. Brand colours only.</p><div class="sws">{sw}</div>
-<div class="cols"><div><h3>FRAME, NEVER BROKEN</h3>No header logo, tag or footer strip: LinkedIn already shows the company name above the post. 64 px margins. One idea per poster. Headline readable at 360 px wide. English only.</div>
+<div class="cols"><div><h3>FRAME, NEVER BROKEN</h3>Two small corner marks: category tag top-right, wordmark bottom-left. No header logo or footer strip, since LinkedIn already shows the company name. 64 px margins. One idea per poster. Headline readable at 360 px wide. English only.</div>
 <div><h3>IMAGES</h3>No AI-generated images. Photos, logos and screenshots come from the team and are placed into the HTML as supplied. Atmosphere is CSS and SVG only.</div>
 <div><h3>HOW TO MAKE ONE</h3>Pick a layout below, run <code>render_poster.py --layout ID --set key=value --out poster.png</code>. No layout fits? Write HTML and use <code>--html</code>.</div></div>
 <h2>Layout pool</h2><p class="lead">Rotate within a category; never the same layout twice in a row.</p><div class="pool">{figs}</div>
