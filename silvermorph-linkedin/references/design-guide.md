@@ -1,6 +1,6 @@
 # Silvermorph LinkedIn: poster design guide (v2)
 
-Renderer: `python3 scripts/render_poster.py --list` shows the 10 layouts and their slots. Output: 1200 x 1200 PNG (1:1, locked as default by the owner; a 4:5 variant is optional later). Filename: `silvermorph-<category>-<slug>.png`.
+Renderer: `python3 scripts/render_poster.py --list` shows the layouts (live reference: `design-reference.html`, rebuilt by `scripts/build_reference.py`) and their slots. Output: 1200 x 1200 PNG (1:1, locked as default by the owner; a 4:5 variant is optional later). Filename: `silvermorph-<category>-<slug>.png`.
 
 ## Brand tokens (v3, owner-set 2026-10-14 from the SenseAI x Silvermorph partnership image)
 Cool, clean, tech-forward. Values sampled from the reference image.
@@ -34,6 +34,7 @@ Logo top-left · category tag top-right · wordmark strip at the bottom · one i
 |---|---|---|
 | 1A | Team News | photo, date chip, deep-blue lower-third panel |
 | 1B | Team News | huge name, arch-cropped portrait |
+| 1C | Team News | event recap with 3 photos: wide main photo, two smaller below, navy panel under the collage. Use when 2 or more event photos exist |
 | 2A | Product Update | tinted waveform ribbon, tilted phone with chat |
 | 2B | Product Update | dark, giant percentage, ranked match card |
 | 2C | Product Update | same as 2A but the phone shows a REAL English screenshot or recording frame (slot `screenshot`). Preferred whenever a real capture exists |

@@ -12,7 +12,7 @@ Each spec: **Job** (what the post does) · **Reader gets** · **Trigger** · **B
 - **Structure:** 1 fact opener (what, where, when) · 2 why we were there · 3 the person and one concrete thing they did or said · 4 what it tells about the team, one line, no adjectives · 5 thanks and one specific question.
 - **Length:** 400 to 800 chars.
 - **Hashtags:** `#TeamSilvermorph` `#LifeAtSilvermorph` `#HomeCare` · situational `#Hiring` `#NewHire` `#AwardWinner` `#Gerontech`
-- **Layouts:** 1A event recap (photo, date chip, lower-third) · 1B person spotlight (name, arch portrait)
+- **Layouts:** 1A event recap (photo, date chip, lower-third) · 1C event recap with 3 photos · 1B person spotlight (name, arch portrait)
 - **Gates:** real photo supplied · every named person has consent on file · one real quote or detail from the user (never invented).
 
 ## 2. Product Update

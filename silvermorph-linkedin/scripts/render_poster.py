@@ -27,7 +27,21 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 CSS = (ROOT / "assets" / "posters.css").read_text(encoding="utf-8")
 LOGO = (ROOT / "assets" / "logo.png").as_uri()
-CHROME = os.environ.get("CHROME_PATH", "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome")
+def find_chrome():
+    """CHROME_PATH, else the first Chrome or Chromium found on macOS, Linux or Windows."""
+    import shutil
+    cands = [os.environ.get("CHROME_PATH", ""), "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+             "/Applications/Chromium.app/Contents/MacOS/Chromium",
+             r"C:\Program Files\Google\Chrome\Application\chrome.exe",
+             r"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"]
+    cands += [shutil.which(n) or "" for n in ("google-chrome", "chromium", "chromium-browser", "chrome")]
+    for c in cands:
+        if c and Path(c).exists():
+            return c
+    sys.exit("Chrome or Chromium not found. Install it or set CHROME_PATH.")
+
+
+CHROME = find_chrome()
 e = html.escape
 
 
@@ -64,6 +78,25 @@ def ribbon():
 def l1a(s):
     return ('<div class="st">' + photo_div(s, "photo") + f'<div class="lt"><span class="chip">{e(s["date"])}</span>'
             f'<h4>{br(s["headline"])}</h4><p>{e(s["sub"])}</p></div></div>')
+
+
+def _crop(s, key, left, top, w, h, radius, pos):
+    p = s.get(key)
+    bg = (f"background:url('{img_uri(p)}') {pos}/cover" if p else "")
+    ph = "" if p else f'<span>REAL PHOTO NEEDED<br><b>{e(key)}</b></span>'
+    return (f'<div class="photo" style="position:absolute;left:{left}px;top:{top}px;width:{w}px;height:{h}px;'
+            f'border-radius:{radius};overflow:hidden;{bg}">{ph}</div>')
+
+
+def l1c(s):
+    """Event recap with 3 photos: wide main photo, two smaller below, navy panel under the collage."""
+    return (_crop(s, "photo", 64, 124, 1072, 380, "28px 28px 6px 6px", s.get("photo_pos", "50% 62%"))
+            + _crop(s, "photo_a", 64, 512, 532, 262, "6px 6px 6px 28px", s.get("photo_a_pos", "50% 50%"))
+            + _crop(s, "photo_b", 604, 512, 532, 262, "6px 6px 28px 6px", s.get("photo_b_pos", "50% 40%"))
+            + '<div style="position:absolute;left:64px;right:64px;top:788px;height:312px;background:#0C305A;border-radius:6px 6px 28px 28px;padding:36px 46px;color:#fff">'
+            f'<span class="chip" style="font-size:24px;padding:8px 24px">{e(s["date"])}</span>'
+            f'<div style="margin-top:20px;font-size:60px;line-height:1.05;font-weight:800;letter-spacing:-1.5px">{br(s["headline"])}</div>'
+            f'<div style="margin-top:16px;font-size:30px;color:#50DFDD">{e(s["sub"])}</div></div>')
 
 
 def l1b(s):
@@ -162,6 +195,7 @@ SIZES = {}  # all layouts are square 1200 x 1200 (owner decision 2026-10-14)
 
 LAYOUTS = {
     "1A": ("TEAM NEWS", False, False, ["date", "headline", "sub", "photo"], l1a),
+    "1C": ("TEAM NEWS", False, False, ["date", "headline", "sub", "photo", "photo_a", "photo_b"], l1c),
     "1B": ("TEAM NEWS", False, False, ["role", "name", "line", "event", "photo"], l1b),
     "2A": ("PRODUCT UPDATE", False, True, ["headline", "sub", "voice_label", "voice_text", "reply_label", "reply_text"], l2a),
     "2C": ("PRODUCT UPDATE", False, True, ["headline", "sub", "screenshot"], l2c),

@@ -20,7 +20,9 @@ Update: `git pull`, then copy again (your local `drafts/`, `inputs/`, `calendar/
 
 Open Claude Code and say "I want to post on LinkedIn". The skill creates its working folders from `starter/`. Fill `inputs/00-facts/facts-bank.md` with verified facts first; unverified facts are never used.
 
-Requires Python 3 (`scripts/render_poster.py` renders posters; see the script header for dependencies).
+Requirements: Python 3, Google Chrome or Chromium (posters are HTML screenshotted by headless Chrome; set `CHROME_PATH` if it is not found), and `pip install pillow` for `export_upload_set.py`.
+
+Every post image is HTML. `silvermorph-linkedin/references/design-reference.html` shows all layouts live; after changing a layout run `python3 scripts/build_reference.py` to refresh it.
 
 ## Rules for contributors
 
