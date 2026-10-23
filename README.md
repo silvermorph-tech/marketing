@@ -24,6 +24,15 @@ Requirements: Python 3, Google Chrome or Chromium (posters are HTML screenshotte
 
 Every post image is HTML. `silvermorph-linkedin/references/design-reference.html` shows all layouts live; after changing a layout run `python3 scripts/build_reference.py` to refresh it.
 
+## Daily workflow (what your teammates do)
+
+1. Open Claude Code, say "I want to post on LinkedIn" (or drop copy and photos into the chat).
+2. The coach confirms the post, writes or checks the copy, picks the layout from `references/design-reference.html`, and renders the poster (`scripts/render_poster.py`, HTML screenshotted by Chrome).
+3. You approve the card. The coach hands you every file to upload, numbered in order, and fills the LinkedIn composer in the browser.
+4. You click Post, then tell the coach "published". It logs and archives the draft.
+
+Every poster is HTML: all layouts are in `references/design-reference.html`. To add or change a layout, edit `scripts/render_poster.py` and `assets/posters.css`, then run `python3 scripts/build_reference.py`.
+
 ## Rules for contributors
 
 - Only skill logic goes in the repo: `SKILL.md`, `scripts/`, `references/`, `assets/`, `starter/`.
