@@ -90,10 +90,10 @@ def _crop(s, key, left, top, w, h, radius, pos):
 
 def l1c(s):
     """Event recap with 3 photos: wide main photo, two smaller below, navy panel under the collage."""
-    return (_crop(s, "photo", 64, 124, 1072, 380, "28px 28px 6px 6px", s.get("photo_pos", "50% 62%"))
-            + _crop(s, "photo_a", 64, 512, 532, 262, "6px 6px 6px 28px", s.get("photo_a_pos", "50% 50%"))
-            + _crop(s, "photo_b", 604, 512, 532, 262, "6px 6px 28px 6px", s.get("photo_b_pos", "50% 40%"))
-            + '<div style="position:absolute;left:64px;right:64px;top:788px;height:312px;background:#0C305A;border-radius:6px 6px 28px 28px;padding:36px 46px;color:#fff">'
+    return (_crop(s, "photo", 64, 64, 1072, 470, "28px 28px 6px 6px", s.get("photo_pos", "50% 62%"))
+            + _crop(s, "photo_a", 64, 542, 532, 280, "6px 6px 6px 28px", s.get("photo_a_pos", "50% 50%"))
+            + _crop(s, "photo_b", 604, 542, 532, 280, "6px 6px 28px 6px", s.get("photo_b_pos", "50% 40%"))
+            + '<div style="position:absolute;left:64px;right:64px;top:830px;height:306px;background:#0C305A;border-radius:6px 6px 28px 28px;padding:34px 46px;color:#fff">'
             f'<span class="chip" style="font-size:24px;padding:8px 24px">{e(s["date"])}</span>'
             f'<div style="margin-top:20px;font-size:60px;line-height:1.05;font-weight:800;letter-spacing:-1.5px">{br(s["headline"])}</div>'
             f'<div style="margin-top:16px;font-size:30px;color:#50DFDD">{e(s["sub"])}</div></div>')
@@ -229,7 +229,7 @@ def build_html(layout, slots, stamp="", bg=None, bg_strength=0.88):
     body = (backdrop(bg, dark, tint, bg_strength) if bg else "") + fn(slots) + (f'<div class="demo">{e(stamp)}</div>' if stamp else "")
     return (f'<!DOCTYPE html><html><head><meta charset="utf-8"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">'
             f"<style>{CSS}body,.poster{{width:{W}px;height:{H}px}}</style></head><body><div class=\"poster\"><div class=\"pin {cls}\">{body}"
-            f'<div class="pt"><img src="{LOGO}" alt=""><span class="tag">{tag}</span></div><div class="pb">silvermorph tech</div></div></div></body></html>')
+            '</div></div></body></html>')
 
 
 def main():

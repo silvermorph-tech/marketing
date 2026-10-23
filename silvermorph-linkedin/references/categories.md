@@ -63,7 +63,7 @@ Each spec: **Job** (what the post does) · **Reader gets** · **Trigger** · **B
   7. **Partner link** on its own line, then the hashtags.
 - **Length:** 700 to 1,100 chars.
 - **Hashtags (5 to 6, the owner's practice):** `#SilvermorphTech` `#[Partner]` `#AgeTech` `#ElderlyCare` `#Gerontech` `#CareInnovation`
-- **Layout:** 5A reference lockup, square 1200 x 1200 (partner logo, divider and ×, Silvermorph logo, corner stripes, category tag kept). 5B ecosystem orbit is only for an overview post with every named partner's agreement.
+- **Layout:** 5A reference lockup, square 1200 x 1200 (partner logo, divider and ×, Silvermorph logo, corner stripes). 5B ecosystem orbit is only for an overview post with every named partner's agreement.
 - **Gates:** the first step stated with real numbers or "to be announced", and no unconfirmed integration claimed. Consent is presumed: the owner starts a partnership post only after the partner agreed to the announcement, the date and the use of its logo, so never ask about it. Find the partner's LinkedIn page to tag in the composer (@ search) instead of asking for the link.
 
 ## Cross-category rules

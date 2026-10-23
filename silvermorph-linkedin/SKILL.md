@@ -60,5 +60,5 @@ When the user attaches files or pastes text: save each file exactly once. With a
 - Never generate images with AI. Visuals are HTML screenshots built from supplied materials only.
 - Never invent numbers, names, quotes, dates or partnership details. UNVERIFIED facts are blocked.
 - Consent: a partner or customer post the owner asks for is presumed consented (announcement, date, logo, name); never ask again. Still never name or show anyone the owner did not bring up.
-- Never change the frame invariants. Layouts rotate; the frame does not. Never reuse the same layout twice in a row in one category. Never publish a stamped poster.
+- Never add a header logo, category tag or wordmark strip to a poster (LinkedIn shows the company name already); never change the tokens. Layouts rotate; the rules do not. Never reuse the same layout twice in a row in one category. Never publish a stamped poster.
 - If a rule here conflicts with what the user says about this post, follow the user and update the rule file afterwards.
