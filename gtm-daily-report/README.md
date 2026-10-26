@@ -1,103 +1,55 @@
-# EZZY GTM 日報工作流
+# EZZY GTM 日報 · 一鍵工具
 
-> 📁 **本目錄是「去數據版本」（public repo）**：只收錄腳本與文檔。數據快照、日報歸檔、情報日誌與 GitHub Actions 定時任務都在 private repo `Silvermorph-tech/Report-Skills`。本目錄的 `.gitignore` 已擋下 `ezzy_data/*.json`、`reports/`、`sent_intel_log.md`、`config.env`，請勿把含客戶資料的檔案提交到這裡。
+每天早上自動從打卡系統下載最新數據、生成當日日報。
+填一次郵箱設定，之後**雙擊一下**就能把日報發出去。
 
-每日面向 EZZY 地推團隊（Kelly / Jeffrey / Jordan）的 GTM 日報：漏斗覆盤、銷售情報、商業化情報、P0/P1/P2 跟進分級、今日行動清單。
+---
 
-## 目錄結構
+## 第一步：安裝（2 分鐘）
 
-```
-gtm-daily-report/
-├── ezzy_data/            # 數據快照（JSON）+ 分析腳本（Python）
-│   ├── customers.json        # 機構主檔（名稱、地區、屬主 owner）
-│   ├── contacts.json         # 聯絡人
-│   ├── visits.json           # 地推打卡紀錄（outcome、note、inserted_at）
-│   ├── pipeline.json         # 漏斗管線
-│   ├── customer_state.json   # 客戶狀態（interest、跟進日期等）
-│   ├── aggregate.py          # 主聚合腳本：漏斗統計 + P0/P1/P2 分級重算
-│   ├── funnel.py             # 漏斗 outcome 歸一化與分層
-│   ├── analyze.py            # 週期對比分析（本週 vs 上週）
-│   └── coverage.py           # 每人覆蓋率（名下機構 vs 已拜訪）
-├── scripts/
-│   ├── fetch_data.py         # 從 Supabase 拉取五表快照（HTTP 200 逐一驗證）
-│   ├── build_report.py       # 跑 aggregate 並生成當日日報骨架（情報欄位留空）
-│   └── send_report.py        # 把當日日報以 SMTP 電郵發出（HTML，支援表格）
-├── run.sh                    # 一鍵本地執行：拉數據 → 生成骨架 →（可選）發郵件
-├── config.env.example        # 本地設定模板（複製為 config.env 使用，已被 gitignore）
-├── reports/              # 日報歸檔（一份 = 一個工作日）
-│   └── gtm_daily_report_YYYY-MM-DD.md
-└── sent_intel_log.md     # 已發送情報日誌（去重唯一基準）
-```
-
-## 數據來源
-
-打卡系統 = Supabase 項目 `igqedzdaeubnexplzloa`（ezzy-field 打卡 App 寫入），五張表：`customers`（278 seed + 現場新增）/ `contacts` / `visits` / `pipeline` / `customer_state`。本地快照即用 `scripts/fetch_data.py` 從 Supabase REST API 拉取。
-
-## 自動化（GitHub Actions）
-
-`.github/workflows/gtm-report.yml`：**每週一、五 09:00 HKT** 自動執行——
-
-1. 拉取 Supabase 五表快照 → 更新 `ezzy_data/*.json`
-2. 跑 `aggregate.py` → 生成當日 `reports/gtm_daily_report_YYYY-MM-DD.md` 骨架（數據部分，情報欄位留空）
-3. **新建骨架時**以 SMTP 發郵件給團隊（`scripts/send_report.py`）
-4. 有變更才 commit 並推送
-
-需要 repo 設定 Secret：`SUPABASE_ANON_KEY`（前端同款 anon key；RLS 已管控權限）、`SMTP_USER` / `SMTP_PASS`（Gmail 請用「應用程式密碼」）、`MAIL_TO`（收件人，逗號分隔）。亦可隨時在 Actions 頁手動觸發（workflow_dispatch）。已存在的同日報不會被覆蓋。
-
-## 本地一鍵運行（團隊成員）
-
-不依賴 GitHub，任何電腦裝了 Python 3 就能跑：
+打開「終端機」（Terminal，按 `Command + 空格` 輸入 Terminal 就有），貼上：
 
 ```bash
-git clone https://github.com/Silvermorph-tech/marketing.git   # 或直接用私有庫
-cd marketing/gtm-daily-report
-cp config.env.example config.env   # 填入 SUPABASE_ANON_KEY 等
-./run.sh            # 拉數據 + 生成當日骨架
-./run.sh --mail     # 完成後順便發郵件（需 config.env 設好 SMTP_*）
+git clone https://github.com/Silvermorph-tech/marketing.git ~/gtm
 ```
 
-定時（macOS / Linux crontab）：
+然後把設定檔建好（把 key 貼進去，key 找 Kelly 要）：
 
 ```bash
-crontab -e
-# 週一、五 09:00 自動執行，日誌寫入 cron.log
-0 9 * * 1,5 cd ~/marketing/gtm-daily-report && ./run.sh --mail >> cron.log 2>&1
+cd ~/gtm/gtm-daily-report
+cp config.env.example config.env
+open -e config.env        # 用文字編輯器打開，貼上 SUPABASE_ANON_KEY，存檔
 ```
 
-⚠️ **同一個人二選一**：私有庫的 GitHub Actions 已在每週一五自動跑並發信；若你本地又加 cron，會收到重複郵件。本地 cron 適合成員自己想單獨跑、或不用 GitHub 的情況。
+## 第二步：設成每天早上自動更新
 
-## 每日運作流程（人工 / agent 補完部分）
+終端機再貼一行（每天 09:00 自動下載數據 + 生成日報）：
 
-1. **更新數據快照**：✅ 週一、五由 Actions 自動執行；其他日子手動跑 `python3 scripts/fetch_data.py gtm-daily-report/ezzy_data`。
-2. **跑聚合**：✅ 已併入 Actions 的骨架生成。手動執行：
-   ```bash
-   cd gtm-daily-report/ezzy_data && python3 aggregate.py
-   ```
-   （`analyze.py` / `funnel.py` / `coverage.py` 為輔助分析，依當日需要執行；注意各腳本預設的工作目錄不同。）
-3. **撰寫日報**：按最新歸檔的 `reports/` 模板格式產出當日 `gtm_daily_report.md`，核心欄位：
-   - 今日一句話（最重要的判斷）
-   - 累計覆蓋 / Demo 中 / P0 缺口 摘要表
-   - 🎯 銷售情報、💰 商業化情報（各 2 條，附來源連結與「用處／啟發」）
-   - 📊 地推漏斗覆盤（7 天流轉 + 累計 outcome 分佈 + 跟進分級清單）
-   - ✅ 今日行動（按優先級、標屬主）
-4. **情報去重**：同一事件／政策／案例 **7 天內只報一次**（有重大進展除外）。去重基準為 `sent_intel_log.md` 記錄的最近一次**實發**情報（草稿不算數）。
-5. **歸檔**：日報發出後，複製為 `reports/gtm_daily_report_YYYY-MM-DD.md`，並把當日實發情報追加到 `sent_intel_log.md`。
+```bash
+(crontab -l 2>/dev/null; echo '0 9 * * * cd ~/gtm/gtm-daily-report && ./run.sh >> cron.log 2>&1') | crontab -
+```
 
-## 跟進分級口徑（2026-10-26 起生效）
+**完成 ✅** 之後每天打開 `gtm/gtm-daily-report/reports/` 就能看到當日日報。
 
-不再以「沒填跟進日期」一概算作缺口。只有銷售明確留有意向信號的才算**必要跟進（P0）**：
+## 第三步：連接你的郵箱（要發信才需要）
 
-- ① 狀態為高意向／已約 Demo
-- ② interest ≥ 3
-- ③ 打卡 note 有明確意向關鍵詞（有興趣／想要／AI 自動錄入／價錢 OK／expand／預計 case 數等）
+1. 到 **myaccount.google.com/apppasswords** 建一組「應用程式密碼」（16 位亂碼；公司帳號建不了就先用個人 Gmail）
+2. 打開 `config.env`，填三段：
 
-「不考慮」與「未拜訪」直接排除；低意向且無信號的列入培育／觀察層（P1/P2），不作追數要求。
+```
+SMTP_USER=你的郵箱@gmail.com
+SMTP_PASS=那16位密碼
+MAIL_TO=收件人（多人用逗號隔開）
+```
 
-## 數據紀律
+## 每天使用
 
-- 日報必須包含「近 7 天打卡次數」警報：若打卡為零，要區分是「零錄入」還是「數據丟失」（五表拉取驗證）。
-- 數字與前一期的對比以 `reports/` 最近一次歸檔為基準。
+| 要做什麼 | 怎麼做 |
+|---|---|
+| 看日報 | 打開 `reports/` 文件夾 |
+| **發日報** | **雙擊 `發送日報.command`**（第一次要右鍵 → 打開） |
+| 發信 | 用編輯器把日報裡的「銷售情報 / 商業化情報 / 今日行動」補完，再雙擊發送 |
 
-## 隱私
+> ⚠️ `config.env`（含你的郵箱密碼）永遠不會被上傳 GitHub（已設防線）；含客戶資料的檔案也不要手動提交。
 
-`ezzy_data/` 含真實客戶資料，本庫僅限 Silvermorph 團隊內部使用。
+管理細節（數據口徑、情報去重規則）見 [WORKFLOW.md](WORKFLOW.md)。
