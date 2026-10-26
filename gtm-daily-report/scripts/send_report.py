@@ -77,7 +77,8 @@ def main():
     user, pwd, to = os.environ.get('SMTP_USER'), os.environ.get('SMTP_PASS'), os.environ.get('MAIL_TO')
     missing = [k for k, v in (('SMTP_USER', user), ('SMTP_PASS', pwd), ('MAIL_TO', to)) if not v]
     if missing:
-        sys.exit('缺少環境變數：' + ', '.join(missing))
+        print(f'未設定 {", ".join(missing)}，略過發信（設定後即可自動發信）')
+        return
 
     host = os.environ.get('SMTP_HOST', 'smtp.gmail.com')
     port = int(os.environ.get('SMTP_PORT', '465'))
