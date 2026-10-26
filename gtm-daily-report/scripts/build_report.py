@@ -57,9 +57,16 @@ report = f"""# EZZY GTM 日報 · {date}（週{weekday}）
 
 os.makedirs(os.path.join(GTM, 'reports'), exist_ok=True)
 path = os.path.join(GTM, 'reports', f'gtm_daily_report_{date}.md')
+created = 'false'
 if os.path.exists(path):
     print(f'已存在，不覆蓋：{path}')
 else:
     with open(path, 'w', encoding='utf-8') as f:
         f.write(report)
     print(f'已生成：{path}')
+    created = 'true'
+
+# 在 GitHub Actions 裡輸出 created 旗標，供後續「只在新建時發信」步驟判斷
+if os.environ.get('GITHUB_OUTPUT'):
+    with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as f:
+        f.write(f'created={created}\n')

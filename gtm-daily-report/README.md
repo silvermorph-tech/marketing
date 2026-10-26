@@ -1,7 +1,5 @@
 # EZZY GTM 日報工作流
 
-> 📁 **本目錄是「去數據版本」（public repo）**：只收錄腳本與文檔。數據快照、日報歸檔、情報日誌與 GitHub Actions 定時任務都在 private repo `Silvermorph-tech/silvermorph-skills`。本目錄的 `.gitignore` 已擋下 `ezzy_data/*.json`、`reports/`、`sent_intel_log.md`，請勿把含客戶資料的檔案提交到這裡。
-
 每日面向 EZZY 地推團隊（Kelly / Jeffrey / Jordan）的 GTM 日報：漏斗覆盤、銷售情報、商業化情報、P0/P1/P2 跟進分級、今日行動清單。
 
 ## 目錄結構
@@ -20,7 +18,10 @@ gtm-daily-report/
 │   └── coverage.py           # 每人覆蓋率（名下機構 vs 已拜訪）
 ├── scripts/
 │   ├── fetch_data.py         # 從 Supabase 拉取五表快照（HTTP 200 逐一驗證）
-│   └── build_report.py       # 跑 aggregate 並生成當日日報骨架（情報欄位留空）
+│   ├── build_report.py       # 跑 aggregate 並生成當日日報骨架（情報欄位留空）
+│   └── send_report.py        # 把當日日報以 SMTP 電郵發出（HTML，支援表格）
+├── run.sh                    # 一鍵本地執行：拉數據 → 生成骨架 →（可選）發郵件
+├── config.env.example        # 本地設定模板（複製為 config.env 使用，已被 gitignore）
 ├── reports/              # 日報歸檔（一份 = 一個工作日）
 │   └── gtm_daily_report_YYYY-MM-DD.md
 └── sent_intel_log.md     # 已發送情報日誌（去重唯一基準）
@@ -36,9 +37,32 @@ gtm-daily-report/
 
 1. 拉取 Supabase 五表快照 → 更新 `ezzy_data/*.json`
 2. 跑 `aggregate.py` → 生成當日 `reports/gtm_daily_report_YYYY-MM-DD.md` 骨架（數據部分，情報欄位留空）
-3. 有變更才 commit 並推送
+3. **新建骨架時**以 SMTP 發郵件給團隊（`scripts/send_report.py`）
+4. 有變更才 commit 並推送
 
-需要 repo 設定 Secret `SUPABASE_ANON_KEY`（前端同款 anon key；RLS 已管控權限）。亦可隨時在 Actions 頁手動觸發（workflow_dispatch）。已存在的同日報不會被覆蓋。
+需要 repo 設定 Secret：`SUPABASE_ANON_KEY`（前端同款 anon key；RLS 已管控權限）、`SMTP_USER` / `SMTP_PASS`（Gmail 請用「應用程式密碼」）、`MAIL_TO`（收件人，逗號分隔）。亦可隨時在 Actions 頁手動觸發（workflow_dispatch）。已存在的同日報不會被覆蓋。
+
+## 本地一鍵運行（團隊成員）
+
+不依賴 GitHub，任何電腦裝了 Python 3 就能跑：
+
+```bash
+git clone https://github.com/Silvermorph-tech/marketing.git   # 或直接用私有庫
+cd marketing/gtm-daily-report
+cp config.env.example config.env   # 填入 SUPABASE_ANON_KEY 等
+./run.sh            # 拉數據 + 生成當日骨架
+./run.sh --mail     # 完成後順便發郵件（需 config.env 設好 SMTP_*）
+```
+
+定時（macOS / Linux crontab）：
+
+```bash
+crontab -e
+# 週一、五 09:00 自動執行，日誌寫入 cron.log
+0 9 * * 1,5 cd ~/marketing/gtm-daily-report && ./run.sh --mail >> cron.log 2>&1
+```
+
+⚠️ **同一個人二選一**：私有庫的 GitHub Actions 已在每週一五自動跑並發信；若你本地又加 cron，會收到重複郵件。本地 cron 適合成員自己想單獨跑、或不用 GitHub 的情況。
 
 ## 每日運作流程（人工 / agent 補完部分）
 
