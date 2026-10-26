@@ -1,5 +1,7 @@
 # EZZY GTM 日報工作流
 
+> 📁 **本目錄是「去數據版本」（public repo）**：只收錄腳本與文檔。數據快照、日報歸檔、情報日誌與 GitHub Actions 定時任務都在 private repo `Silvermorph-tech/Report-Skills`。本目錄的 `.gitignore` 已擋下 `ezzy_data/*.json`、`reports/`、`sent_intel_log.md`、`config.env`，請勿把含客戶資料的檔案提交到這裡。
+
 每日面向 EZZY 地推團隊（Kelly / Jeffrey / Jordan）的 GTM 日報：漏斗覆盤、銷售情報、商業化情報、P0/P1/P2 跟進分級、今日行動清單。
 
 ## 目錄結構
