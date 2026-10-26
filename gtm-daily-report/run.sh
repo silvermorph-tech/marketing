@@ -8,7 +8,10 @@ set -euo pipefail
 cd "$(dirname "$0")"
 
 # 讀取本地設定（config.env 已被 .gitignore 忽略，不會進 git）
+# set -a：source 的變數自動 export，子進程（python）才讀得到
+set -a
 [ -f config.env ] && source config.env
+set +a
 
 echo "==> 1/3 拉取 Supabase 五表快照"
 python3 scripts/fetch_data.py ezzy_data
